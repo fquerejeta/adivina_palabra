@@ -25,14 +25,21 @@ class JuegoNumero(Juego):
                 else:
                     repetir = False
 
-            if self.numeroAdivinar > numero:
-                print(f"Intento erróneo. El número a adivinar es mayor.{self.numIntentos} intentos disponibles.")
-            elif self.numeroAdivinar == numero:
-                textoIntentos = ','.join(self.numerosIntentosFallidos)
-                print(f"Ha acertado el número! Los intentos fueron los siguientes:{textoIntentos}.")
+            if self.comprobarNumero(numero):
                 return True
-            else:
-                print(f"Intento erróneo. El número a adivinar es menor.{str(self.numIntentos)} intentos disponibles.")
 
-            self.numerosIntentosFallidos.append(str(numero))
+        return False
+
+    def comprobarNumero(self, numeroComprobar):
+        if self.numeroAdivinar > numeroComprobar:
+            print(f"Intento erróneo. El número a adivinar es mayor.{self.numIntentos} intentos disponibles.")
+        elif self.numeroAdivinar == numeroComprobar:
+            textoIntentos = ','.join(self.numerosIntentosFallidos)
+            print(f"Ha acertado el número! Los intentos fueron los siguientes:{textoIntentos}.")
+            return True
+        else:
+            print(f"Intento erróneo. El número a adivinar es menor.{str(self.numIntentos)} intentos disponibles.")
+
+        self.numerosIntentosFallidos.append(str(numeroComprobar))
+
         return False

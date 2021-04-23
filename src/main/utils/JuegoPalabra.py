@@ -10,14 +10,15 @@ class JuegoPalabra(JuegoNumero):
     def __init__(self, numIntentos, numero, palabra):
         JuegoNumero.__init__(self, numIntentos, numero)
         self.palabraAdivinar = palabra
+        self.letrasIntentos = []
+        self.letrasAcertadas = []
+        self.palabraAdivinarTupla = tuple(self.palabraAdivinar)
 
     def adivinarPalabra(self):
-        palabraAdivinarTupla = tuple(self.palabraAdivinar)
-        letrasAcertadas = []
-        for i in range(len(palabraAdivinarTupla)):
-            letrasAcertadas.append("*")
 
-        letrasIntentos = []
+        for i in range(len(self.palabraAdivinarTupla)):
+            self.letrasAcertadas.append("*")
+
         while (self.numIntentos > 0):
             repetir = True
             while (repetir):
@@ -33,30 +34,36 @@ class JuegoPalabra(JuegoNumero):
 
             if respuesta == 0:
                 palabra = input("adivine palabra:")
-                if palabra == self.palabraAdivinar:
-                    print("Ha acertado la palabra!")
-
-                    textoIntentos = ','.join(self.numerosIntentosFallidos)
-                    print(f"Los intentos numero de letras fueron los siguientes: {textoIntentos}.")
-
-                    textoIntentos = ','.join(letrasIntentos)
-                    print(f"Los intentos de letras fueron los siguientes: {textoIntentos}.")
-
+                if self.comprobarPalabra(palabra):
                     break
-                else:
-                    print(f"Intento erróneo. No es la palabra.{palabra}.{str(self.numIntentos)} intentos disponibles.")
             elif respuesta == 1:
                 letra = input("adivine letra:")
                 indice = 0
-                for x in palabraAdivinarTupla:
+                for x in self.palabraAdivinarTupla:
                     if x == letra:
-                        letrasAcertadas[indice] = letra
+                        self.letrasAcertadas[indice] = letra
                     indice = indice + 1
-                textoLetras = ''.join(letrasAcertadas)
-                if letra in palabraAdivinarTupla:
+                textoLetras = ''.join(self.letrasAcertadas)
+                if letra in self.palabraAdivinarTupla:
                     print(
                         f"Intento correcto. Existe la letra.{textoLetras}.{str(self.numIntentos)} intentos disponibles.")
                 else:
                     print(
                         f"Intento erróneo. No existe la letra.{textoLetras}.{str(self.numIntentos)} intentos disponibles.")
-                letrasIntentos.append(letra)
+                self.letrasIntentos.append(letra)
+
+    def comprobarPalabra(self, palabraComprobar):
+
+        if palabraComprobar == self.palabraAdivinar:
+            print("Ha acertado la palabra!")
+
+            textoIntentos = ','.join(self.numerosIntentosFallidos)
+            print(f"Los intentos numero de letras fueron los siguientes: {textoIntentos}.")
+
+            textoIntentos = ','.join(self.letrasIntentos)
+            print(f"Los intentos de letras fueron los siguientes: {textoIntentos}.")
+
+            return True
+        else:
+            print(f"Intento erróneo. No es la palabra.{palabraComprobar}.{str(self.numIntentos)} intentos disponibles.")
+            return False
