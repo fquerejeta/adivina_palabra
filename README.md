@@ -1,5 +1,9 @@
-# adivina_palabra
+# Adivina palabra
 
-nuevo print
+Juego en python en el que adivinas una palabra
 
-linea nueva
+### Prerequisitos
+Debe de crear una entorno virtual con las librerías descritas en requirements.txt
+
+## Jugar a Adivina palabra
+Para poder juegar tenemos que ejecutar main.py que se encuentra en la carpeta src
